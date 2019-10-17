@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using SecretProject.Library.Objects;
 using SecretProject.Library.States;
 using System;
 using System.Collections.Generic;
@@ -21,17 +22,19 @@ namespace SecretProject.Library
 		protected SpriteBatch sb;
 		public SpriteBatch spriteBatch => sb;
 
+		public AssetLoader assets;
+
 		protected static GameInstance instance = null;
 		protected static readonly object instancePadlock = new object();
 
 		protected MouseState currentMs;
 		protected MouseState previousMs;
 
-		protected State currentState;
+		public State currentState;
 		protected State nextState;
 
 		public SpriteFont mainFont;
-
+		public SpriteFont worldFont;
 
 		public GameInstance()
 		{
@@ -71,9 +74,12 @@ namespace SecretProject.Library
 		{
 			sb = new SpriteBatch(GraphicsDevice);
 
-			currentState = new SplashScreenState(GraphicsDevice, Content);
-
 			mainFont = Content.Load<SpriteFont>("Fonts/Font_01");
+			worldFont = Content.Load<SpriteFont>("Fonts/Font_01_2");
+
+			assets = new AssetLoader();
+
+			currentState = new SplashScreenState(GraphicsDevice, Content);
 		}
 
 		protected override void UnloadContent()
